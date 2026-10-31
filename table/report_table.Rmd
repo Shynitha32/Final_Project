@@ -1,0 +1,29 @@
+---
+output: html_document
+---
+
+```{r, here-i-am-table}
+here::i_am(
+  "table/report_table.Rmd")
+```
+
+# Descriptive Analysis
+
+## Tabular analysis
+
+```{r table1, echo=FALSE}
+table_one <- readRDS(
+  file = here::here("table/output/table_one.rds")
+)
+
+knitr::kable(
+  table_one,
+  col.names = c("Mental Health Indicator", "Percent"),
+  caption = "Mental Health and Substance Use Indicators Among U.S. High School Students, 2023",
+  row.names = FALSE,
+  align = c("l", "r")
+)
+```
+
+### Table One Description
+Table 1 presents the prevalence of seven mental health, suicide-related, and substance-use indicators among U.S. high school students in 2023. Persistent sadness or hopelessness had the highest reported prevalence at 39.7%, followed by poor mental health at 28.5% and seriously considering suicide at 20.4%. Suicide attempts and illicit drug use had the lowest reported percentages, at 9.5% and 9.9%, respectively.

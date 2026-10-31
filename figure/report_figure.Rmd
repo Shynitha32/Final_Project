@@ -1,0 +1,21 @@
+---
+output: html_document
+---
+
+```{r, here-i-am-figure}
+here::i_am(
+  "figure/report_figure.Rmd")
+```
+
+## Data Visualization
+
+```{r, figure}
+#| fig.align = "center",
+#| out.width = "500px"
+knitr::include_graphics(
+  here::here("figure/output/figure.png")
+)
+```
+
+### Figure One Description
+Figure 1 shows changes in the percentage of female and male U.S. high school students reporting persistent sadness or hopelessness from 2019 to 2023. Among female students, the percentage increased from 46.6% in 2019 to 56.6% in 2021, and decreased to 52.6% in 2023. Among male students, the percentages were relatively stable, increasing from 26.8% in 2019 to 28.6% in 2021 and then decreasing to 27.7% in 2023. Female students reported a higher percentage of persistent sadness or hopelessness than male students during all three survey years.

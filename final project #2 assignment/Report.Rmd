@@ -1,0 +1,102 @@
+---
+title: 'Final Project 2: R Markdown'
+author: "Shynitha Pulluri"
+date: "`r Sys.Date()`"
+output: html_document
+---
+<style>
+body {font-family: "Times New Roman", Times, serif;}
+
+#header {text-align: center;}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE, 
+  message = FALSE
+)
+
+library(tidyverse)
+library(knitr)
+```
+
+# Introduction 
+The Youth Risk Behavior Surveillance System (YRBSS) monitors health behaviors and experiences among high school students in the United States. The dataset used in this analysis contains prevalence estimates for mental health, suicide-related behaviors, and selected substance-use indicators across U.S. states and various demographic groups for 2019, 2021, and 2023. Variables include survey year, geographic area, demographic group, estimated percent, and corresponding 95% confidence intervals.
+
+The objectives of this analysis are to describe the prevalence of mental health, suicide-related, and substance-use indicators among U.S. high school students in 2023 and to examine changes in sadness or hopelessness prevalence among female and male students from 2019 through 2023.
+
+## Loading Data
+First 6 rows displayed 
+
+```{r}
+yrbss <- read_csv("YRBSS.csv")
+head(yrbss)
+```
+
+# Descriptive Statistics
+
+```{r}
+table1 <- yrbss |>
+  filter(
+    Year == 2023,
+    Area == "United States",
+    Demographics_Type == "Total"
+  ) |>
+  mutate(
+    Indicator = case_when(
+      str_detect(Question, "sad or hopeless") ~ "Persistent sadness or hopelessness",
+      str_detect(Question, "seriously consider") ~ "Seriously considered suicide",
+      str_detect(Question, "make a plan") ~ "Made a suicide plan",
+      str_detect(Question, "actually attempt") ~ "Attempted suicide",
+      str_detect(Question, "mental health not good") ~ "Poor mental health",
+      str_detect(Question, "prescription pain medicine") ~ "Prescription pain medicine misuse",
+      str_detect(Question, "select illicit drugs") ~ "Illicit drug use"
+    )
+  ) |>
+  select(Indicator, Percent)
+
+knitr::kable(
+  table1,
+  col.names = c("Mental Health Indicator", "Percent"),
+  caption = "Table 1. Mental Health and Substance Use Indicators Among U.S. High School Students, 2023"
+)
+```
+
+### Table One Description
+Table 1 presents the prevalence of seven mental health, suicide-related, and substance-use indicators among U.S. high school students in 2023. Persistent sadness or hopelessness had the highest reported prevalence at 39.7%, followed by poor mental health at 28.5% and seriously considering suicide at 20.4%. Suicide attempts and illicit drug use had the lowest reported percentages, at 9.5% and 9.9%, respectively.
+
+# Data Visualization
+
+```{r}
+figure_data <- yrbss |>
+  filter(
+    Area == "United States",
+    Demographics_Type == "Sex",
+    Demographics_Value %in% c("Female", "Male"),
+    str_detect(Question, "sad or hopeless")
+  ) |>
+  mutate(Percent = as.numeric(Percent))
+
+ggplot(
+  figure_data,
+  aes(
+    x = Year,
+    y = Percent,
+    color = Demographics_Value,
+    group = Demographics_Value
+  )
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  labs(
+    title = "Persistent Sadness or Hopelessness by Sex",
+    x = "Year",
+    y = "Percent of students (%)",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```
+
+### Figure One Description
+Figure 1 shows changes in the percentage of female and male U.S. high school students reporting persistent sadness or hopelessness from 2019 to 2023. Among female students, the percentage increased from 46.6% in 2019 to 56.6% in 2021, and decreased to 52.6% in 2023. Among male students, the percentages were relatively stable, increasing from 26.8% in 2019 to 28.6% in 2021 and then decreasing to 27.7% in 2023. Female students reported a higher percentage of persistent sadness or hopelessness than male students during all three survey years.

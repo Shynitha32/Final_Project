@@ -1,0 +1,39 @@
+---
+title: "Final Project"
+author: "Shynitha Pulluri"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+<style>
+body {font-family: "Times New Roman", Times, serif;}
+
+#header {text-align: center;}
+</style>
+
+```{r, set-chunk-opts, include = FALSE}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE
+)
+```
+
+# Introduction 
+The Youth Risk Behavior Surveillance System (YRBSS) monitors health behaviors and experiences among high school students in the United States. The dataset used in this analysis contains prevalence estimates for mental health, suicide-related behaviors, and selected substance-use indicators across U.S. states and various demographic groups for 2019, 2021, and 2023. Variables include survey year, geographic area, demographic group, estimated percent, and corresponding 95% confidence intervals.
+
+The objectives of this analysis are to describe the prevalence of mental health, suicide-related, and substance-use indicators among U.S. high school students in 2023 and to examine changes in sadness or hopelessness prevalence among female and male students from 2019 through 2023.
+
+```{r, load-data}
+here::i_am(
+  "report_combined.Rmd"
+)
+
+data <- readRDS(
+  file =
+    here::here("data/data.rds")
+)
+```
+
+```{r, child-reports}
+#| child = c("table/report_table.Rmd", "figure/report_figure.Rmd")
+```
