@@ -1,18 +1,18 @@
-# Final Project Description
+# DATA 550 Final Project
 
-The HIV report has been broken into two subprojects.
+This project analyzes Youth Risk Behavior Surveillance System (YRBSS) data to describe mental health, suicide-related behaviors, and selected substance-use indicators among U.S. high school students. The project also examines changes in persistent sadness or hopelessness among female and male students from 2019 through 2023.
 
-- `table/` contains all code and output related to the Descriptive Analysis (Table One)
-	- `table/code/make_table1.R` produces Table 1
-		- table 1 output should be saved to `table/output/`
-  -	`table/report_table.Rmd` reads in output from `table/output/` and creates the report for the descriptive analysis
-- `figure/` contains all code and output related to Data Visualization (Table One)
-	- `figure/code/make_figure.R` produces Figure 1
-    - figure 1 output should be saved to `figure/output/`
-  -	`figure/report_figure.Rmd` reads in output from `figure/output/` and creates the report for data visualization
+## Project Structure
 
-Table One and Figure One are combined in `combined_report.Rmd`.
-
+- `data/` contains the data used for the analysis.
+- `table/` contains the code and output for Table 1.
+  - `table/code/make_table1.R` creates Table 1.
+  - `table/output/table_one.rds` contains the saved Table 1 output.
+  - `table/report_table.Rmd` creates the table portion of the report.
+- `figure/` contains the code and output for Figure 1.
+  - `figure/code/make_figure.R` creates Figure 1.
+  - `figure/output/figure.png` contains the saved figure.
+  - `figure/report_figure.Rmd` creates the Figure 1.
+- `report_combined.Rmd` combines the table and figure reports using child documents.
+- `render_combined_report.R` renders the final combined report.
 - [child](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html) documents are used to stitch together a final report
-
-`render_combined_report.R` is used for rendering the combined report from the command line
